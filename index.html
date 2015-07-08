@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<meta charset='utf-8'>
+<title>Consuming Data with Node.js</title>
+<style>
+  html, body {
+    background-color: #444;
+    color: #EFE;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+  }
+  slide {
+    display: none;
+  }
+  slide.active {
+    display: block;
+    padding: 10px;
+  }
+  code {
+    text-align: left;
+    white-space: pre;
+  }
+  iframe {
+    border: none;
+    height: 800px;
+    width: 100%;
+  }
+</style>
+<slide>
+  <h1>Consuming Data with Node.js</h1>
+</slide>
+<slide>
+  <h1>Alien Movie Posters</h1>
+</slide>
+<slide>
+  <h1>Web Scraping</h1>
+  <ul>
+   <li>jsdom
+   <li>dom selectors
+   <li>async
+  </ul>
+</slide>
+<slide>
+  <code src='/imdb.js'></code>
+</slide>
+<slide>
+  <iframe src='http://htilford.com:5000'></iframe>
+</slide>
+<slide>
+  <h1>Api Library</h1>
+  <ul>
+   <li>themoviedb.org
+   <li>moviedb
+   <li>async
+  </ul>
+</slide>
+<slide>
+  <code src='/mvb.js'></code>
+</slide>
+<slide>
+  <iframe src='http://htilford.com:4000'></iframe>
+</slide>
+<slide>
+  <h1>Questions</h1>
+</slide>
+<script>
+  ;(function () {
+    'use strict'
+
+    const slides = document.querySelectorAll('slide')
+    let index = 0
+    setActive(index)
+
+    document.addEventListener('keydown', function (event) {
+      if (event.code === 'ArrowRight' && index < slides.length - 1) {
+        setActive(++index)
+      } else if (event.code === 'ArrowLeft' && index > 0) {
+        setActive(--index)
+      }
+    }, true)
+
+    function setActive (index) {
+      for (let i = 0; i < slides.length; i++) {
+        if (i === index) {
+          slides[i].className = 'active'
+        } else {
+          slides[i].className = ''
+        }
+      }
+    }
+
+    const codes = document.querySelectorAll('code')
+    for (let i = 0; i < codes.length; i++) {
+     let code = codes[i];
+     console.dir(code.attributes.src.value);
+     fetch(code.attributes.src.value).then(function (res) {
+       return res.text();
+     }).then(function (src) {
+        code.innerText = src;
+      });
+    }
+  })();
+</script>
